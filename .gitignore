@@ -1,0 +1,5 @@
+.vscode/
+venv/
+.gitignore
+.DS_Store
+.idea/
