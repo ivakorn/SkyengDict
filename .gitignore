@@ -3,3 +3,6 @@ venv/
 .gitignore
 .DS_Store
 .idea/
+.dist/
+.pypirc
+.src/skydict.egg-info/
