@@ -6,3 +6,6 @@ venv/
 .dist/
 .pypirc
 .src/skydict.egg-info/
+test.py
+example.py
+example2.py

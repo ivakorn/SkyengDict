@@ -118,7 +118,7 @@ class Dictionary:
                     mnemonics=meaning['mnemonics'],
                     translation=meaning['translation']['text'],
                     translation_note=meaning['translation']['note'],
-                    images=images,
+                    images=[None] if images == [] else images,
                     definition=meaning['definition']['text'],
                     definition_sound_url=meaning['definition']['soundUrl'],
                     examples=examples,
@@ -142,7 +142,7 @@ class Dictionary:
             'pageSize': pagesize}
         headers = {}
         response = await self._fetch(self.url_search, params=params, headers=headers, session=self._session)
-        print(response.status)
+        #print(response.status)
         data = await response.json()
         return self._get_words(data)
 
@@ -170,11 +170,12 @@ class Dictionary:
         }
         headers = {}
         response = await self._fetch(self.url_meaning, params=params, headers=headers, session=self._session)
-        print(response.status)
+        #print(response.status)
         data = await response.json()
         return self._get_meanings(data)
 
     async def _close(self) -> None:
         if not self._session.closed:
-            print("Session is closed")
+            #print("Session is closed")
             await self._session.close()
+
