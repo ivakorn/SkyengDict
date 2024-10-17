@@ -1,4 +1,6 @@
 from typing import Optional, Mapping
+from dateutil import parser
+from datetime import datetime
 
 import re
 from aiohttp import ClientResponse, ClientSession
@@ -93,15 +95,22 @@ class Dictionary:
                         translation_note=alternative_translation['translation']['note']
                     )
                     alternative_translations.append(form)
-                properties = Properties(collocation=False,
-                                        irregular=False,
-                                        past_tense=None,
-                                        past_participle=None,
-                                        transitivity=None,
-                                        phrasal_verb=False,
-                                        sound_url=None,  # TODO : пока не знаю что там должно быть
-                                        false_friends=None)
-                # TODO : изменить
+                _prop = meaning['properties']
+                properties = Properties(collocation=_prop.get('collocation'),
+                                        not_gradable=_prop.get('notGradable'),
+                                        irregular=_prop.get('irregular'),
+                                        past_tense=_prop.get('pastTense'),
+                                        past_participle=_prop.get('pastTense'),
+                                        countability=_prop.get('countability'),
+                                        plurality=_prop.get('plurality'),
+                                        plural=_prop.get('plural'),
+                                        irregular_plural=_prop.get('irregularPlural'),
+                                        transitivity=_prop.get('transitivity'),
+                                        linking_verb=_prop.get('linkingVerb'),
+                                        linking_type=_prop.get('linkingType'),
+                                        phrasal_verb=_prop.get('phrasalVerb'),
+                                        sound_url=_prop.get('soundUrl'),
+                                        false_friends=_prop.get('falseFriends'), )
                 part_of_speech_code = self._what_part_of_speech(meaning['partOfSpeechCode'])
                 meaning = Meaning(
                     id=meaning['id'],
@@ -114,7 +123,6 @@ class Dictionary:
                     transcription=meaning['transcription'],
                     properties=properties,
                     updated_at=meaning['updatedAt'],
-                    # TODO изменить дату на дату питон
                     mnemonics=meaning['mnemonics'],
                     translation=meaning['translation']['text'],
                     translation_note=meaning['translation']['note'],
@@ -142,7 +150,7 @@ class Dictionary:
             'pageSize': pagesize}
         headers = {}
         response = await self._fetch(self.url_search, params=params, headers=headers, session=self._session)
-        #print(response.status)
+        # print(response.status)
         data = await response.json()
         return self._get_words(data)
 
@@ -158,7 +166,12 @@ class Dictionary:
         else:
             raise ValueError
 
-    async def meaning(self, ids: int | list[int], data: str = '') -> list[Meaning]:
+    def _convert_time(self, complex_date_string: str) -> str:
+        default = datetime(2000, 1, 1, 0, 0, 0)
+        date_obj_flex = parser.parse(complex_date_string, default=default)
+        return date_obj_flex.strftime("%Y-%m-%d %H:%M:%S")
+
+    async def meaning(self, ids: int | list[int], data: str = None) -> list[Meaning]:
         '''
         :param ids: An array of meaning ids or integer value
         :param data: Retrieve results from this date. * * Must be in UTC timezone. *
@@ -166,16 +179,15 @@ class Dictionary:
         '''
         params = {
             'ids': self._out_value(ids),
-            'updatedAt': data
+            'updatedAt': '' if data is None else self._convert_time(data)
         }
         headers = {}
+        print(params)
         response = await self._fetch(self.url_meaning, params=params, headers=headers, session=self._session)
-        #print(response.status)
         data = await response.json()
         return self._get_meanings(data)
 
     async def _close(self) -> None:
         if not self._session.closed:
-            #print("Session is closed")
+            # print("Session is closed")
             await self._session.close()
-

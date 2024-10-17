@@ -102,12 +102,19 @@ class BriefMeaning:  # Meaning2
 
 @dataclass
 class Properties:
-    collocation: bool  #
-    irregular: bool  #
+    collocation: bool | None #
+    not_gradable: bool | None
+    irregular: bool | None #
     past_tense: str | None  # "found",
     past_participle: str | None  # "found",
-    transitivity: str | None  # "t",
-    phrasal_verb: bool  # false,
+    transitivity: str | None  # "t", "i" "ti"
+    countability: str | None # "c", cu
+    plurality: str | None # s , sp
+    plural: str | None
+    irregular_plural: str | None
+    phrasal_verb: bool | None # false,
+    linking_verb: bool | None #
+    linking_type: str | None # 'L + noun, L + adjective'
     sound_url: Pronunciation | None  #
     false_friends: list | None   #
 
@@ -116,7 +123,6 @@ class Properties:
 class Definition:  #
     text: str  #
     sound_url: Pronunciation  #
-    #
 
 
 @dataclass
