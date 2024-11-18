@@ -13,9 +13,10 @@ from .types import (Word, Meaning,
 
 
 class Dictionary:
-    def __init__(self) -> None:
+    def __init__(self, logging=False) -> None:
         self.url_search = f"https://dictionary.skyeng.ru/api/public/v1/words/search"
         self.url_meaning = f"https://dictionary.skyeng.ru/api/public/v1/meanings"
+        self.logging = logging
 
     async def __aenter__(self):
         self._session = ClientSession(raise_for_status=True)
@@ -54,7 +55,8 @@ class Dictionary:
                         translation_note=brief_meaning['translation']['note'],
                         image_url=None if match is None else match.group(0),
                         transcription=brief_meaning['transcription'],
-                        sound_url=Pronunciation(brief_meaning['soundUrl'], Language.en)  # sound of transcription
+                        sound_url=Pronunciation(brief_meaning['soundUrl'], Language.en),  # sound of transcription
+                        text=word['text'],
                     )
                     brief_meanings.append(m)
                 word = Word(
@@ -150,7 +152,8 @@ class Dictionary:
             'pageSize': pagesize}
         headers = {}
         response = await self._fetch(self.url_search, params=params, headers=headers, session=self._session)
-        # print(response.status)
+        if self.logging:
+            print("response status ", response.status)
         data = await response.json()
         return self._get_words(data)
 

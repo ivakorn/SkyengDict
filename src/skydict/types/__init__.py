@@ -17,7 +17,7 @@ class PartOfSpeechCode(Enum):  # Available code
     prp = ("preposition", "предлог")
     prn = ("pronoun", "местоимение")
     crd = ("cardinal number", "количественное числительное")
-    crj = ("conjunction", "союз")
+    cjc = ("conjunction", "союз")
     exc = ("interjection", "междометие")
     det = ("article", "артикль")
     abb = ("abbreviation", "сокращение")
@@ -98,6 +98,7 @@ class BriefMeaning:  # Meaning2
     image_url: str  #
     transcription: str  #
     sound_url: Pronunciation
+    text: str
 
 
 @dataclass
