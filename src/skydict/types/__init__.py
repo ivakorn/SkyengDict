@@ -91,7 +91,7 @@ class Pronunciation:
 
 @dataclass
 class BriefMeaning:  # Meaning2
-    id: MeaningId  # MeaningId.
+    mean_id: MeaningId  # MeaningId.
     part_of_speech_code: PartOfSpeechCode
     translation: str
     translation_note: str
@@ -150,7 +150,7 @@ class AlternativeTranslation:  #
 
 @dataclass
 class Meaning:
-    id: MeaningId  # Meaning id.
+    mean_id: MeaningId  # Meaning id.
     word_id: int  # Word is a group of meanings. We combine meanings by word entity.
     difficulty_level: int  # There are 6 difficultyLevels: 1, 2, 3, 4, 5, 6.
     part_of_speech_code: PartOfSpeechCode  # String representation of a part of speech.
@@ -163,7 +163,8 @@ class Meaning:
     mnemonics: str  #
     translation: str  #
     translation_note: str | None
-    images: list[str]  # A collection of an images.
+    images_url: list[str | None]  # A collection of an images.
+    images_id: list[str | None]
     definition: str  #
     definition_sound_url: Pronunciation
     examples: list[Example]  # Usage examples
@@ -175,6 +176,6 @@ class Meaning:
 
 @dataclass
 class Word:
-    id: int  #
+    word_id: int  #
     text: str  #
     meanings: list[BriefMeaning]  #

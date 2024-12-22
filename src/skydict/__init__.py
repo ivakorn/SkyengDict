@@ -49,7 +49,7 @@ class Dictionary:
                     part_of_speech_code = self._what_part_of_speech(brief_meaning['partOfSpeechCode'])
                     match = re.search(pattern=r"https.+", string=brief_meaning['imageUrl'])
                     m = BriefMeaning(
-                        id=int(brief_meaning['id']),
+                        mean_id=int(brief_meaning['id']),
                         part_of_speech_code=part_of_speech_code,
                         translation=brief_meaning['translation']['text'],
                         translation_note=brief_meaning['translation']['note'],
@@ -60,7 +60,7 @@ class Dictionary:
                     )
                     brief_meanings.append(m)
                 word = Word(
-                    id=int(word['id']),
+                    word_id=int(word['id']),
                     text=word['text'],
                     meanings=brief_meanings
                 )
@@ -71,10 +71,14 @@ class Dictionary:
         meanings = []
         if data is not None:
             for meaning in data:
-                images = []
+                images_url = []
                 for image in meaning['images']:
                     match = re.search(pattern=r"https.+", string=image['url'])
-                    images.append(None if match is None else match.group(0))
+                    images_url.append(None if match is None else match.group(0))
+                images_id = []
+                for image in meaning['images']:
+                    match = re.search(pattern=r"(?<=skyeng\.ru/images/).*", string=image['url'])
+                    images_id.append(None if match is None else match.group(0))
                 examples = []
                 for example in meaning['examples']:
                     examples.append(Example(text=example['text'],
@@ -115,7 +119,7 @@ class Dictionary:
                                         false_friends=_prop.get('falseFriends'), )
                 part_of_speech_code = self._what_part_of_speech(meaning['partOfSpeechCode'])
                 meaning = Meaning(
-                    id=meaning['id'],
+                    mean_id=meaning['id'],
                     word_id=int(meaning['wordId']),
                     difficulty_level=meaning['difficultyLevel'],
                     part_of_speech_code=part_of_speech_code,
@@ -128,7 +132,8 @@ class Dictionary:
                     mnemonics=meaning['mnemonics'],
                     translation=meaning['translation']['text'],
                     translation_note=meaning['translation']['note'],
-                    images=[None] if images == [] else images,
+                    images_url=[None] if images_url == [] else images_url,
+                    images_id=[None] if images_id == [] else images_id,
                     definition=meaning['definition']['text'],
                     definition_sound_url=meaning['definition']['soundUrl'],
                     examples=examples,
