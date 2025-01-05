@@ -49,7 +49,7 @@ class Dictionary:
                     part_of_speech_code = self._what_part_of_speech(brief_meaning['partOfSpeechCode'])
                     match = re.search(pattern=r"https.+", string=brief_meaning['imageUrl'])
                     m = BriefMeaning(
-                        mean_id=int(brief_meaning['id']),
+                        id=int(brief_meaning['id']),
                         part_of_speech_code=part_of_speech_code,
                         translation=brief_meaning['translation']['text'],
                         translation_note=brief_meaning['translation']['note'],
@@ -60,7 +60,7 @@ class Dictionary:
                     )
                     brief_meanings.append(m)
                 word = Word(
-                    word_id=int(word['id']),
+                    id=int(word['id']),
                     text=word['text'],
                     meanings=brief_meanings
                 )
@@ -119,7 +119,7 @@ class Dictionary:
                                         false_friends=_prop.get('falseFriends'), )
                 part_of_speech_code = self._what_part_of_speech(meaning['partOfSpeechCode'])
                 meaning = Meaning(
-                    mean_id=meaning['id'],
+                    id=meaning['id'],
                     word_id=int(meaning['wordId']),
                     difficulty_level=meaning['difficultyLevel'],
                     part_of_speech_code=part_of_speech_code,
