@@ -1,21 +1,21 @@
-# Skydict: Асинхронная библиотека для работы с Dictionary API Skyeng
+# SkyEngDict: Асинхронная библиотека для работы с Dictionary API Skyeng
 
 ## Описание
 
-**Skydict** — это асинхронная библиотека на Python, предоставляющая доступ к API словаря Skyeng. Она позволяет искать слова, получать их значения и обрабатывать лингвистические данные, такие как части речи, переводы и произношения.
+**SkyEngDict** — это асинхронная библиотека на Python, предоставляющая доступ к API словаря Skyeng. Она позволяет искать слова, получать их значения и обрабатывать лингвистические данные, такие как части речи, переводы и произношения.
 
 ### Установка
 
 ```bash
-pip install skydict
+pip install skyengdict
 ```
 
 ### Пример использования
 
 ```python
 import asyncio  
-from skydict import Dictionary  
-from skydict.types import Meaning, BriefMeaning  
+from skyengdict import Dictionary  
+from skyengdict.types import Meaning, BriefMeaning  
 
   
 async def main():  
@@ -37,6 +37,9 @@ if __name__ == '__main__':
 
 
 ### Класс `Dictionary`
+  **Параметры**:  
+    - `logging`: Логировать процесс получения данных. По умолчанию `False`
+    - `rising`: Возбуждать исключения, если не найдены слова (значения), либо возвращать пустой список. По умолчанию `True`
 
 Основной класс для взаимодействия с API Skyeng Dictionary. Он предоставляет методы для поиска слов и получения их значений.
 

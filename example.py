@@ -1,9 +1,9 @@
 import asyncio
-#from skydict import Dictionary
-#from skydict.types import Meaning, BriefMeaning
-from src.skydict import Dictionary
-from src.skydict.types import Meaning, BriefMeaning
-from src.skydict.exc import WordsNotFound, MeaningsNotFound, SkyConnectorError
+#from skyengdict import Dictionary
+#from skyengdict.types import Meaning, BriefMeaning
+from src.skyengdict import Dictionary
+from src.skyengdict.types import Meaning, BriefMeaning
+from src.skyengdict.exc import WordsNotFound, MeaningsNotFound, SkyConnectorError
 from typing import cast
 
 
