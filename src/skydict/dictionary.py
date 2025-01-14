@@ -5,18 +5,22 @@ from datetime import datetime
 import re
 from aiohttp import ClientResponse, ClientSession
 from .types import (Word, Meaning,
-                    BriefMeaning, Translation,
-                    PartOfSpeechCode, Definition,
+                    BriefMeaning,
+                    Translation,
+                    PartOfSpeechCode,
+                    Definition,
                     Properties, Example,
                     MeaningWithSimilarTranslation,
                     AlternativeTranslation, Pronunciation, Language)
+from .exc.exceptions import WordsNotFound, MeaningsNotFound, SkyConnectorError
 
 
 class Dictionary:
-    def __init__(self, logging=False) -> None:
+    def __init__(self, logging=False, rising=True) -> None:
         self.url_search = f"https://dictionary.skyeng.ru/api/public/v1/words/search"
         self.url_meaning = f"https://dictionary.skyeng.ru/api/public/v1/meanings"
         self.logging = logging
+        self.rising = rising
 
     async def __aenter__(self):
         self._session = ClientSession(raise_for_status=True)
@@ -33,8 +37,11 @@ class Dictionary:
             headers: Mapping[str, str],
             session: ClientSession,
     ) -> ClientResponse:
-        async with session.get(url, params=params, headers=headers, raise_for_status=True) as response:
-            await response.read()
+        try:
+            async with session.get(url, params=params, headers=headers, raise_for_status=True) as response:
+                await response.read()
+        except Exception:
+            raise SkyConnectorError
         return response
 
     def _what_part_of_speech(self, part: str) -> PartOfSpeechCode:
@@ -42,7 +49,7 @@ class Dictionary:
 
     def _get_words(self, data) -> list[Word]:
         words = []
-        if data is not None:
+        if data:
             for word in data:
                 brief_meanings = []
                 for brief_meaning in word['meanings']:
@@ -65,11 +72,14 @@ class Dictionary:
                     meanings=brief_meanings
                 )
                 words.append(word)
+        else:
+            if self.rising:
+                raise WordsNotFound
         return words
 
     def _get_meanings(self, data) -> list[Meaning]:
         meanings = []
-        if data is not None:
+        if data:
             for meaning in data:
                 images_url = []
                 for image in meaning['images']:
@@ -141,6 +151,9 @@ class Dictionary:
                     alternative_translations=alternative_translations
                 )
                 meanings.append(meaning)
+        else:
+            if self.rising:
+                raise MeaningsNotFound
         return meanings
 
     async def words(self, word: str, page: int = 1, pagesize: int = 0) -> list[Word]:
@@ -190,7 +203,8 @@ class Dictionary:
             'updatedAt': '' if data is None else self._convert_time(data)
         }
         headers = {}
-        print(params)
+        if self.logging:
+            print(params)
         response = await self._fetch(self.url_meaning, params=params, headers=headers, session=self._session)
         data = await response.json()
         return self._get_meanings(data)
