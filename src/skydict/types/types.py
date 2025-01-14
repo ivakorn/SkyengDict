@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import TypeAlias
+from typing import TypeAlias, Optional
 from enum import Enum
 from urllib.parse import urlparse, parse_qs, urlencode
 
@@ -103,21 +103,21 @@ class BriefMeaning:  # Meaning2
 
 @dataclass
 class Properties:
-    collocation: bool | None #
-    not_gradable: bool | None
-    irregular: bool | None #
-    past_tense: str | None  # "found",
-    past_participle: str | None  # "found",
-    transitivity: str | None  # "t", "i" "ti"
-    countability: str | None # "c", cu
-    plurality: str | None # s , sp
-    plural: str | None
-    irregular_plural: str | None
-    phrasal_verb: bool | None # false,
-    linking_verb: bool | None #
-    linking_type: str | None # 'L + noun, L + adjective'
-    sound_url: Pronunciation | None  #
-    false_friends: list | None   #
+    collocation: Optional[bool] #
+    not_gradable: Optional[bool]
+    irregular: Optional[bool] #
+    past_tense: Optional[str] # "found",
+    past_participle: Optional[str] # "found",
+    transitivity: Optional[str] # "t", "i" "ti"
+    countability: Optional[str]  # "c", cu
+    plurality: Optional[str] # s , sp
+    plural: Optional[str]
+    irregular_plural: Optional[str]
+    phrasal_verb: Optional[bool] # false,
+    linking_verb: Optional[bool] #
+    linking_type: Optional[str] # 'L + noun, L + adjective'
+    sound_url: Optional[Pronunciation]  #
+    false_friends: Optional[list]  #
 
 
 @dataclass  #
@@ -162,9 +162,9 @@ class Meaning:
     updated_at: str  #
     mnemonics: str  #
     translation: str  #
-    translation_note: str | None
-    images_url: list[str | None]  # A collection of an images.
-    images_id: list[str | None]
+    translation_note: Optional[str]
+    images_url: list[Optional[str]]  # A collection of an images.
+    images_id: list[Optional[str]]
     definition: str  #
     definition_sound_url: Pronunciation
     examples: list[Example]  # Usage examples
