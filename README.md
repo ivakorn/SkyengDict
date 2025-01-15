@@ -200,7 +200,7 @@ print(pronunciation.male_1)
 from skyengdict.exceptions import SkyConnectorError
 
 try:
-	async with Dictionary() as dictionary:
+    async with Dictionary() as dictionary:
         await dictionary.words("example")    
 except SkyConnectorError:
     print("Ошибка соединения с сервером SkyEng.")
@@ -214,7 +214,7 @@ except SkyConnectorError:
 from skyengdict.exceptions import WordsNotFound
 
 try:
-	async with Dictionary() as dictionary:
+    async with Dictionary() as dictionary:
         word = await dictionary.words("nonexistentword0101010")
 except WordsNotFound:
     print("Слово не найдено.")
@@ -228,8 +228,8 @@ except WordsNotFound:
 from skyengdict.exceptions import MeaningsNotFound
 
 try:
-	async with Dictionary() as dictionary:
-		meaning = await dictionary.meaning(1000)
+    async with Dictionary() as dictionary:
+        meaning = await dictionary.meaning(1000)
 except MeaningsNotFound:
     print("Значения для слова не найдены.")
 ```
