@@ -92,13 +92,13 @@ class Pronunciation:
 @dataclass
 class BriefMeaning:  # Meaning2
     id: MeaningId  # MeaningId.
-    part_of_speech_code: PartOfSpeechCode
-    translation: str
-    translation_note: str
-    image_url: str  #
-    transcription: str  #
-    sound_url: Pronunciation
-    text: str
+    part_of_speech_code: Optional[PartOfSpeechCode]
+    translation: Optional[str]
+    translation_note: Optional[str]
+    image_url: Optional[str]  #
+    transcription: Optional[str]  #
+    sound_url: Optional[Pronunciation]
+    text: Optional[str]
 
 
 @dataclass
@@ -152,21 +152,21 @@ class AlternativeTranslation:  #
 class Meaning:
     id: MeaningId  # Meaning id.
     word_id: int  # Word is a group of meanings. We combine meanings by word entity.
-    difficulty_level: int  # There are 6 difficultyLevels: 1, 2, 3, 4, 5, 6.
+    difficulty_level: Optional[int]  # There are 6 difficultyLevels: 1, 2, 3, 4, 5, 6.
     part_of_speech_code: PartOfSpeechCode  # String representation of a part of speech.
-    prefix: str  # Infinitive particle (to) or articles (a, the).
-    text: str  # Meaning text.
-    sound_url: Pronunciation  # URL to meaning sound.
-    transcription: str  # IPA phonetic transcription.
+    prefix: Optional[str]  # Infinitive particle (to) or articles (a, the).
+    text: Optional[str]  # Meaning text.
+    sound_url: Optional[Pronunciation]  # URL to meaning sound.
+    transcription: Optional[str]  # IPA phonetic transcription.
     properties: Properties  #
-    updated_at: str  #
-    mnemonics: str  #
-    translation: str  #
+    updated_at: Optional[str]  #
+    mnemonics: Optional[str]  #
+    translation: Optional[str]  #
     translation_note: Optional[str]
     images_url: list[Optional[str]]  # A collection of an images.
     images_id: list[Optional[str]]
-    definition: str  #
-    definition_sound_url: Pronunciation
+    definition: Optional[str]  #
+    definition_sound_url: Optional[Pronunciation]
     examples: list[Example]  # Usage examples
     meanings_with_similar_translation: (
         list[MeaningWithSimilarTranslation])  # Collection of meanings with similar translations.
