@@ -6,26 +6,27 @@ from urllib.parse import urlparse, parse_qs, urlencode
 MeaningId: TypeAlias = int
 
 class PartOfSpeechCode(Enum):  # Available code
-    def __init__(self, en, ru):
+    def __init__(self, en, ru, ru_brief):
         self.en = en
         self.ru = ru
+        self.ru_brief = ru_brief
 
-    n = ("noun", "существительное")
-    v = ("verb", "глагол")
-    j = ("adjective", "прилагательное")
-    r = ("adverb", "наречие")
-    prp = ("preposition", "предлог")
-    prn = ("pronoun", "местоимение")
-    crd = ("cardinal number", "количественное числительное")
-    cjc = ("conjunction", "союз")
-    exc = ("interjection", "междометие")
-    det = ("article", "артикль")
-    abb = ("abbreviation", "сокращение")
-    x = ("particle", "частица")
-    ord = ("ordinal number", "порядковое числительное")
-    md = ("modal verb", "модальный глагол")
-    ph = ("phrase", "фраза")
-    phi = ("idiom", "идиома")
+    n = ("noun", "существительное", "сущ.")
+    v = ("verb", "глагол", "гл.")
+    j = ("adjective", "прилагательное", "прил.")
+    r = ("adverb", "наречие", "нар.")
+    prp = ("preposition", "предлог", "предлог")
+    prn = ("pronoun", "местоимение", "мест.")
+    crd = ("cardinal number", "количественное числительное", "кол. числ.")
+    cjc = ("conjunction", "союз", "союз")
+    exc = ("interjection", "междометие", "межд.")
+    det = ("article", "артикль", "артикль")
+    abb = ("abbreviation", "сокращение", "сокращ.")
+    x = ("particle", "частица", "частица")
+    ord = ("ordinal number", "порядковое числительное", "поряд. числ.")
+    md = ("modal verb", "модальный глагол", "мод. гл.")
+    ph = ("phrase", "фраза", "фраза")
+    phi = ("idiom", "идиома", "идиома")
 
 
 @dataclass
