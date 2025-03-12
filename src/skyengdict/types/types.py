@@ -54,40 +54,40 @@ class Pronunciation:
         __lang = language.name
         self.__assembly_params_dict = {'text': __text,
                                        'lang': __lang,
-                                       'voice': 'male_1'}
+                                       'voice': 'british_male'}
         if __params.get('isSsml') is not None:
             __is_ssml = __params.get('isSsml')[0]
             self.__assembly_params_dict['isSsml'] = __is_ssml
 
     @property
-    def male_1(self):
-        self.__assembly_params_dict['voice'] = 'male_1'
+    def british_male(self):
+        self.__assembly_params_dict['voice'] = 'british_male'
         params = urlencode(self.__assembly_params_dict)
         return f'{self.__scheme}://{self.__netloc}{self.__path}?{params}'
 
     @property
-    def male_2(self):
-        self.__assembly_params_dict['voice'] = 'male_2'
+    def american_male(self):
+        self.__assembly_params_dict['voice'] = 'american_male'
         params = urlencode(self.__assembly_params_dict)
         return f'{self.__scheme}://{self.__netloc}{self.__path}?{params}'
 
     @property
-    def female_1(self):
-        self.__assembly_params_dict['voice'] = 'female_1'
+    def british_female(self):
+        self.__assembly_params_dict['voice'] = 'british_female'
         params = urlencode(self.__assembly_params_dict)
         return f'{self.__scheme}://{self.__netloc}{self.__path}?{params}'
 
     @property
-    def female_2(self):
-        self.__assembly_params_dict['voice'] = 'female_2'
+    def american_female(self):
+        self.__assembly_params_dict['voice'] = 'american_female'
         params = urlencode(self.__assembly_params_dict)
         return f'{self.__scheme}://{self.__netloc}{self.__path}?{params}'
 
     def __repr__(self):
-        return self.male_1
+        return self.british_male
 
     def __str__(self):
-        return self.male_1
+        return self.british_male
 
 
 @dataclass
