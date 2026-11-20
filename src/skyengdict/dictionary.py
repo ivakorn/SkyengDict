@@ -85,10 +85,6 @@ class Dictionary:
                 for image in meaning['images']:
                     match = re.search(pattern=r"https.+", string=image['url'])
                     images_url.append(None if match is None else match.group(0))
-                images_id = []
-                for image in meaning['images']:
-                    match = re.search(pattern=r"(?<=skyeng\.ru/images/).*", string=image['url'])
-                    images_id.append(None if match is None else match.group(0))
                 examples = []
                 for example in meaning['examples']:
                     examples.append(Example(text=example['text'],
@@ -148,7 +144,6 @@ class Dictionary:
                     translation=meaning['translation']['text'],
                     translation_note=meaning['translation']['note'],
                     images_url=[None] if images_url == [] else images_url,
-                    images_id=[None] if images_id == [] else images_id,
                     definition=_definition.get('text'),
                     definition_sound_url=(Pronunciation(_definition_sound_url, Language.en)
                                           if _definition_sound_url else None),

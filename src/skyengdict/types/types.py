@@ -165,7 +165,6 @@ class Meaning:
     translation: Optional[str]  #
     translation_note: Optional[str]
     images_url: list[Optional[str]]  # A collection of an images.
-    images_id: list[Optional[str]]
     definition: Optional[str]  #
     definition_sound_url: Optional[Pronunciation]
     examples: list[Example]  # Usage examples
