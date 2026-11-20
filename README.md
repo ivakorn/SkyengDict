@@ -145,17 +145,19 @@ if __name__ == '__main__':
   
 - **Методы**:  
   - `british_male`: Возвращает URL-адрес для мужского голоса c британским произношением.  
-  - `amrican_male`: Возвращает URL-адрес для мужского голоса c американским произношением.  
+  - `american_male`: Возвращает URL-адрес для мужского голоса c американским произношением.  
   - `british_female`: Возвращает URL-адрес для женского голоса c британским произношением.  
-  - `amrican_female`: Возвращает URL-адрес для женского голоса c американским произношением.  
+  - `american_female`: Возвращает URL-адрес для женского голоса c американским произношением.  
+
+Все голоса — английские: `Dictionary` всегда создаёт `Pronunciation` с `Language.en`, поэтому `Language.ru` в текущей версии не используется.
 
 пример использования:
 ```
-from skyengdict.type import Pronunciation
+from skyengdict.types import Pronunciation, Language
 
 url = "https://vimbox-tts.skyeng.ru/api/v1/tts?text=Hello&lang=en&voice=male_2"
-pronunciation = Pronunciation(url)
-print(pronunciation.male_1)
+pronunciation = Pronunciation(url, Language.en)
+print(pronunciation.american_male)
 ```
   
 ### `Properties`  

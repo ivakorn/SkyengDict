@@ -21,7 +21,7 @@ async def main():
                       f"    - часть речи: {mean.part_of_speech_code.ru}\n"
                       f"    - уровень сложности: {mean.difficulty_level}\n"
                       f"    - ссылка на изображение: {mean.images_url[0]}\n"
-                      f"    - ссылка на произношение: {mean.sound_url.female_1}\n"
+                      f"    - ссылка на произношение: {mean.sound_url.american_female}\n"
                       f"    - мнемоника: {mean.mnemonics}\n"
                       f"    - колокация: {mean.properties}\n")
 
@@ -33,7 +33,7 @@ async def main():
                     mean = cast(BriefMeaning, mean)
                     print(f"    - перевод: {mean.translation}\n"
                           f"    - ссылка на изображение: {mean.image_url}\n"
-                          f"    - ссылка на произношение: {mean.sound_url.female_1}\n"
+                          f"    - ссылка на произношение: {mean.sound_url.american_female}\n"
                           f"    - транскрипция: {mean.transcription}\n"
                           f"    - перевод: {mean.translation}\n"
                           f"    - часть речи: {mean.part_of_speech_code.ru}\n")
