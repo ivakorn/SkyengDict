@@ -116,7 +116,7 @@ class Dictionary:
                                         not_gradable=_prop.get('notGradable'),
                                         irregular=_prop.get('irregular'),
                                         past_tense=_prop.get('pastTense'),
-                                        past_participle=_prop.get('pastTense'),
+                                        past_participle=_prop.get('pastParticiple'),
                                         countability=_prop.get('countability'),
                                         plurality=_prop.get('plurality'),
                                         plural=_prop.get('plural'),
