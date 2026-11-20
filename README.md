@@ -113,7 +113,7 @@ if __name__ == '__main__':
   - `images_url`: Список URL изображений.  
   - `images_id`: Список идентификаторов изображений.
   - `definition`: Описание значения.  
-  - `definition_sound_url`: Ссылка на произношение описания.  
+  - `definition_sound_url`: Объект `Pronunciation` со ссылкой на произношение описания.  
   - `examples`: Список объектов `Example`, содержащих примеры использования.  
   - `meanings_with_similar_translation`: Список объектов `MeaningWithSimilarTranslation`, представляющих значения с похожими переводами.  
   - `alternative_translations`: Список объектов `AlternativeTranslation`, представляющих альтернативные переводы.  
@@ -169,7 +169,7 @@ print(pronunciation.male_1)
   - `past_participle`: Причастие прошедшего времени (если применимо).  
   - `transitivity`: Переходность глагола (если применимо).  
   - `phrasal_verb`: Указывает, является ли слово фразовым глаголом.  
-  - `sound_url`: Объект `Pronunciation` для звукового сопровождения.  
+  - `sound_url`: Прямая ссылка (URL) на аудиофайл.  
   - `false_friends`: Список ложных друзей (если есть).  
   
 ### `Translation`  

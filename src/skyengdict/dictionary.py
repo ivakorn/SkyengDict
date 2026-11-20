@@ -112,6 +112,9 @@ class Dictionary:
                     )
                     alternative_translations.append(form)
                 _prop = meaning['properties']
+                prop_sound_url = _prop.get('soundUrl')
+                if prop_sound_url and prop_sound_url.startswith('//'):
+                    prop_sound_url = f'https:{prop_sound_url}'
                 properties = Properties(collocation=_prop.get('collocation'),
                                         not_gradable=_prop.get('notGradable'),
                                         irregular=_prop.get('irregular'),
@@ -125,9 +128,11 @@ class Dictionary:
                                         linking_verb=_prop.get('linkingVerb'),
                                         linking_type=_prop.get('linkingType'),
                                         phrasal_verb=_prop.get('phrasalVerb'),
-                                        sound_url=_prop.get('soundUrl'),
+                                        sound_url=prop_sound_url,
                                         false_friends=_prop.get('falseFriends'), )
                 part_of_speech_code = self._what_part_of_speech(meaning['partOfSpeechCode'])
+                _definition = meaning['definition'] or {}
+                _definition_sound_url = _definition.get('soundUrl')
                 meaning = Meaning(
                     id=meaning['id'],
                     word_id=int(meaning['wordId']),
@@ -144,8 +149,9 @@ class Dictionary:
                     translation_note=meaning['translation']['note'],
                     images_url=[None] if images_url == [] else images_url,
                     images_id=[None] if images_id == [] else images_id,
-                    definition=meaning['definition']['text'],
-                    definition_sound_url=meaning['definition']['soundUrl'],
+                    definition=_definition.get('text'),
+                    definition_sound_url=(Pronunciation(_definition_sound_url, Language.en)
+                                          if _definition_sound_url else None),
                     examples=examples,
                     meanings_with_similar_translation=meanings_with_similar_translation,
                     alternative_translations=alternative_translations

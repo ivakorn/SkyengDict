@@ -117,7 +117,7 @@ class Properties:
     phrasal_verb: Optional[bool] # false,
     linking_verb: Optional[bool] #
     linking_type: Optional[str] # 'L + noun, L + adjective'
-    sound_url: Optional[Pronunciation]  #
+    sound_url: Optional[str]  # Direct URL to an audio file.
     false_friends: Optional[list]  #
 
 
