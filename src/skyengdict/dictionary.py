@@ -1,4 +1,4 @@
-from typing import Optional, Mapping
+from typing import Optional, Mapping, AsyncIterator
 from dateutil import parser
 from datetime import datetime
 
@@ -14,6 +14,9 @@ from .types import (Word, Meaning,
                     AlternativeTranslation, Pronunciation, Language)
 from .exc.exceptions import WordsNotFound, MeaningsNotFound, SkyConnectorError
 
+DEFAULT_PAGE_SIZE = 15
+MAX_PAGE_SIZE = 128
+
 
 class Dictionary:
     def __init__(self, logging=False, rising=True) -> None:
@@ -28,6 +31,13 @@ class Dictionary:
 
     async def __aexit__(self, *args, **kwargs):
         await self._close()
+
+    def _page_size(self, pagesize: int, default: int = DEFAULT_PAGE_SIZE) -> int:
+        if pagesize == 0:
+            return default
+        if not 0 < pagesize <= MAX_PAGE_SIZE:
+            raise ValueError(f'pagesize must be between 0 and {MAX_PAGE_SIZE}')
+        return pagesize
 
     async def _fetch(
             self,
@@ -160,11 +170,14 @@ class Dictionary:
     async def words(self, word: str, page: int = 1, pagesize: int = 0) -> list[Word]:
         '''
         :param word:
-        :param page:
-        :param pagesize: if value 0 then show full page, if value 1 then show only one word
-        :return: Find words with meanings. It will return relevant meanings grouped by words.
+        :param page: page number, starting from 1
+        :param pagesize: 0 means default page size (15), maximum is 128
+        :return: One page with meanings. It will return relevant meanings grouped by words.
                  You can search in English or translation
         '''
+        if page < 1:
+            raise ValueError('page must be >= 1')
+        pagesize = self._page_size(pagesize)
         params = {
             'search': word,
             'page': page,
@@ -175,6 +188,27 @@ class Dictionary:
             print("response status ", response.status)
         data = await response.json()
         return self._get_words(data)
+
+    async def iter_words(self, word: str, pagesize: int = MAX_PAGE_SIZE) -> AsyncIterator[Word]:
+        '''
+        :param word:
+        :param pagesize: page size, from 1 to 128 (0 means 128)
+        :return: Async iterator over all found words, fetching pages automatically
+        '''
+        pagesize = self._page_size(pagesize, default=MAX_PAGE_SIZE)
+        page = 1
+        while True:
+            try:
+                batch = await self.words(word, page=page, pagesize=pagesize)
+            except WordsNotFound:
+                if page == 1 and self.rising:
+                    raise
+                break
+            for item in batch:
+                yield item
+            if len(batch) < pagesize:
+                break
+            page += 1
 
     def _out_value(self, ids: int | list[int]) -> str:
         '''
