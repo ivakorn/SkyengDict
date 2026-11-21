@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "SkyengDict"
 version = "1.0.13"
 authors = [
-  { name="ivan kornayhov", email="kiadu@bk.ru" },
+  { name="ivakorn", email="kiadu@bk.ru" },
 ]
 description = "Package for translation of Russian-English words"
 readme = {file = "README.md", content-type = "text/markdown"}
