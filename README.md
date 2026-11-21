@@ -12,27 +12,24 @@ pip install skyengdict
   
 ### Пример использования  
   
-```python  
-import asyncio  
-from skyengdict import Dictionary  
-from skyengdict.types import Meaning, BriefMeaning
+```python
+import asyncio
+from skyengdict import Dictionary
 
-  async def main():    
-    tasks = []    
+
+async def main():
     async with Dictionary() as dictionary:
-     
-        result_1 = await dictionary.words('любовь', pagesize=1)    
-        for word in result_1:    
-            print(f"{word.text} - {word.meanings[0].translation}")    
-                
-        result_2 = await dictionary.meaning(45)    
-        for mean in result_2:    
-            print(f"{mean.text} - {mean.translation}\n")    
-    
-    await asyncio.gather(*tasks)    
-    
-if __name__ == '__main__':    
-    asyncio.run(main())  
+        result_1 = await dictionary.words('любовь', pagesize=1)
+        for word in result_1:
+            print(f"{word.text} - {word.meanings[0].translation}")
+
+        result_2 = await dictionary.meaning(45)
+        for mean in result_2:
+            print(f"{mean.text} - {mean.translation}\n")
+
+
+if __name__ == '__main__':
+    asyncio.run(main())
 ```  
   
   
@@ -198,7 +195,7 @@ print(pronunciation.american_male)
 Исключение, возникающее при отсутствии соединения с сервером.
 
 ```
-from skyengdict.exceptions import SkyConnectorError
+from skyengdict.exc import SkyConnectorError
 
 try:
     async with Dictionary() as dictionary:
@@ -212,7 +209,7 @@ except SkyConnectorError:
 Исключение, возникающее, если слово не найдено.
 
 ```
-from skyengdict.exceptions import WordsNotFound
+from skyengdict.exc import WordsNotFound
 
 try:
     async with Dictionary() as dictionary:
@@ -226,7 +223,7 @@ except WordsNotFound:
 Исключение, возникающее, если значения слова не найдены.
 
 ```
-from skyengdict.exceptions import MeaningsNotFound
+from skyengdict.exc import MeaningsNotFound
 
 try:
     async with Dictionary() as dictionary:
