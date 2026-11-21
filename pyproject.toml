@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=77.0.3"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "SkyengDict"
+version = "1.0.13"
+authors = [
+  { name="ivan kornayhov", email="kiadu@bk.ru" },
+]
+description = "Package for translation of Russian-English words"
+readme = {file = "README.md", content-type = "text/markdown"}
+requires-python = ">=3.10"
+dependencies = [
+  "aiohttp", "python-dateutil"
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+keywords = ["skyeng", "translator", "api", "dictionary", "vocolabry", "lexicon", "skyengdict"]
+
+[project.urls]
+Homepage = "https://github.com/ivakorn/skyengdict"
+Repository = "https://github.com/ivakorn/skyengdict.git"
+
+[tool.setuptools.packages.find]
+where = ["src"]
