@@ -92,7 +92,7 @@ class Pronunciation:
 
 @dataclass
 class BriefMeaning:  # Meaning2
-    id: MeaningId  # MeaningId.
+    id: Optional[MeaningId]  # MeaningId.
     part_of_speech_code: Optional[PartOfSpeechCode]
     translation: Optional[str]
     translation_note: Optional[str]
@@ -123,38 +123,38 @@ class Properties:
 
 @dataclass  #
 class Definition:  #
-    text: str  #
-    sound_url: Pronunciation  #
+    text: Optional[str]  #
+    sound_url: Optional[Pronunciation]  #
 
 
 @dataclass
 class Example:
-    text: str  #
-    sound_url: Pronunciation  #
+    text: Optional[str]  #
+    sound_url: Optional[Pronunciation]  #
 
 
 @dataclass
 class MeaningWithSimilarTranslation:
-    meaning_id: int  #
-    frequency_percent: float  #
-    part_of_speech_abbreviation: str  # часть речи на русском напрм: "гл."
-    translation: str  #
-    translation_note: str
+    meaning_id: Optional[int]  #
+    frequency_percent: Optional[float]  #
+    part_of_speech_abbreviation: Optional[str]  # часть речи на русском напрм: "гл."
+    translation: Optional[str]  #
+    translation_note: Optional[str]
 
 
 @dataclass
 class AlternativeTranslation:  #
-    text: str  #
-    translation: str  #
-    translation_note: str
+    text: Optional[str]  #
+    translation: Optional[str]  #
+    translation_note: Optional[str]
 
 
 @dataclass
 class Meaning:
-    id: MeaningId  # Meaning id.
-    word_id: int  # Word is a group of meanings. We combine meanings by word entity.
+    id: Optional[MeaningId]  # Meaning id.
+    word_id: Optional[int]  # Word is a group of meanings. We combine meanings by word entity.
     difficulty_level: Optional[int]  # There are 6 difficultyLevels: 1, 2, 3, 4, 5, 6.
-    part_of_speech_code: PartOfSpeechCode  # String representation of a part of speech.
+    part_of_speech_code: Optional[PartOfSpeechCode]  # String representation of a part of speech.
     prefix: Optional[str]  # Infinitive particle (to) or articles (a, the).
     text: Optional[str]  # Meaning text.
     sound_url: Optional[Pronunciation]  # URL to meaning sound.
@@ -176,6 +176,6 @@ class Meaning:
 
 @dataclass
 class Word:
-    id: int  #
-    text: str  #
+    id: Optional[int]  #
+    text: Optional[str]  #
     meanings: list[BriefMeaning]  #
